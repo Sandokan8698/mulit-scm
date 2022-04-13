@@ -50,12 +50,6 @@ pipeline {
                 sh("${env.WORKSPACE}/virtenv/bin/python  ./sfly/ppt/environment/cleaner_service/run.py")
             }
         }
-        post {
-            always {
-                sh("deactivate")
-            }
-
-        }
     }
 
 }

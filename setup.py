@@ -42,8 +42,7 @@ setup(
         "botocore",
         "boto3",
         "psycopg2>=2.8.4",
-        "SQLAlchemy==1.3.12",
-        "rich==12.2.0"
+        "SQLAlchemy==1.3.12"
     ],
     use_scm_version={
         'write_to': 'version.py',

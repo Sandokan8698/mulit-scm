@@ -3,7 +3,7 @@
 from sqlalchemy import text
 
 from sfly.ppt.environment.cleaner_service import config
-from sfly.ppt.environment.cleaner_service.formatter import print_table, console
+from sfly.ppt.environment.cleaner_service.formatter import print_table
 from sfly.ppt.environment.cleaner_service.repository.engine import get_connection, in_transaction
 
 
@@ -122,6 +122,7 @@ def __clean(evn, tenant, tables: [], conn, dry_run: bool):
     print_table(tenant, evn, conn.engine.url.database, tables_info)
 
     if not dry_run and should_clean:
-        with console.status("Deleting Records..."):
-            conn.execute(text(f'TRUNCATE TABLE {",".join(tables)}'))
-            console.print(f"Records deleted")
+        conn.execute(text(f'TRUNCATE TABLE {",".join(tables)}'))
+        print(f"Records deleted")
+
+    print("\n")
