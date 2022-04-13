@@ -8,22 +8,23 @@ from sfly.ppt.environment.cleaner_service.repository.engine import get_connectio
 
 
 def clean_environment():
+    print("Running Clean...")
     dry_run = config.dry_run
     env = config.env_to_clean
 
     for tenant in config.tenants:
-        product_conn = get_connection(tenant, config.tenants_config[tenant].get('database'))
-        camunda_conn = get_connection(tenant, config.tenants_config[tenant].get('camunda_database'))
+        tenant_conn = get_connection(tenant, config.tenants_config[tenant].get('database'))
         source_conn = get_connection(tenant, config.source_database)
+        camunda_conn = get_connection(tenant, config.tenants_config[tenant].get('camunda_database'))
 
-        with in_transaction(product_conn, source_conn):
-            __clean_products(tenant, env, dry_run, product_conn=product_conn)
+        with in_transaction(tenant_conn, source_conn):
+            __clean_tenant(tenant, env, dry_run, tenant_conn=tenant_conn)
             __clean_orders(tenant, env, dry_run, source_conn=source_conn)
             __clean_camunda(tenant, env, dry_run, camunda_conn=camunda_conn)
 
 
-def __clean_products(tenant, env: str = "qa", dry_run: bool = False, **kwargs):
-    conn = kwargs.get('product_conn')
+def __clean_tenant(tenant, env: str = "qa", dry_run: bool = False, **kwargs):
+    conn = kwargs.get('tenant_conn')
     __clean(
         env,
         tenant,
