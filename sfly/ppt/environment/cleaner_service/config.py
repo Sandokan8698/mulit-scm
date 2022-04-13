@@ -7,8 +7,8 @@ dry_run = True if getenv("DRY_RUN", 'true') == 'true' else False
 env_to_clean = getenv("ENV_TO_CLEAN", "qa")
 
 source_database = getenv("SOURCE_DATABASE", "source")
-username = getenv("USERNAME", "root")
-password = getenv("PASSWORD", "root")
+username = getenv("DB_CREDS_USR", "admin")
+password = getenv("DB_CREDS_PSW", "admin")
 
 tenants_config = {
     "ftm": {
