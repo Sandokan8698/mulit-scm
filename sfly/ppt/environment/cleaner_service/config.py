@@ -13,8 +13,8 @@ password = getenv("PASSWORD", "root")
 tenants_config = {
     "ftm": {
         "server": getenv("FTM_SERVER", "localhost"),
-        "port": getenv("FTM__PORT", "5432"),
-        "database": getenv("FTM__DATABASE", "fortmill"),
+        "port": getenv("FTM_PORT", "5432"),
+        "database": getenv("FTM_DATABASE", "fortmill"),
         "camunda_database": getenv("FTM__CAMUNDA_DATABASE", "camunda-ftm")
     },
     "msp": {
