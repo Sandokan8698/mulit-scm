@@ -1,9 +1,9 @@
-# Copyright (c) 2019 Shutterfly. All rights reserved.
+# Copyright (c) 2022 Shutterfly. All rights reserved.
 from os import getenv
 
 region = getenv("AWS_REGION", "us-east-1")
 tenants = getenv("TENANTS", 'formtill,msp').split(",")
-dry_run = eval(getenv("DRY_RUN", True))
+dry_run = True if getenv("DRY_RUN", 'true') == 'true' else False
 env_to_clean = getenv("ENV_TO_CLEAN", "qa")
 
 source_database = getenv("SOURCE_DATABASE", "source")
@@ -11,24 +11,28 @@ username = getenv("USERNAME", "root")
 password = getenv("PASSWORD", "root")
 
 tenants_config = {
-    "fortmill": {
-        "server": getenv("FORTMILL_SERVER", "localhost"),
-        "port": getenv("FORTMILL_PORT", "5432"),
-        "database": getenv("FORTMILL_DATABASE", "fortmill")
+    "ftm": {
+        "server": getenv("FTM_SERVER", "localhost"),
+        "port": getenv("FTM__PORT", "5432"),
+        "database": getenv("FTM__DATABASE", "fortmill"),
+        "camunda_database": getenv("FTM__CAMUNDA_DATABASE", "camunda-ftm")
     },
     "msp": {
         "server": getenv("MSP_SERVER", "localhost"),
         "port": getenv("MSP_PORT", "5432"),
-        "database": getenv("MSP_DATABASE", "root")
+        "database": getenv("MSP_DATABASE", "root"),
+        "camunda_database": getenv("MSP_CAMUNDA_DATABASE", "camunda-msp")
     },
     "tpe": {
         "server": getenv("TPE_SERVER", "localhost"),
         "port": getenv("TPE_PORT", "5432"),
-        "database": getenv("TPE_DATABASE", "root")
+        "database": getenv("TPE_DATABASE", "root"),
+        "camunda_database": getenv("TPE_CAMUNDA_DATABASE", "camunda-tpe")
     },
     "dfw": {
         "server": getenv("DFW_SERVER", "localhost"),
         "port": getenv("DFW_PORT", "5432"),
-        "database": getenv("DFW_DATABASE", "root")
+        "database": getenv("DFW_DATABASE", "root"),
+        "camunda_database": getenv("DFW_CAMUNDA_DATABASE", "camunda-dfw")
     }
 }
