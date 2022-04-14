@@ -36,7 +36,6 @@ pipeline {
     stages {
         stage('SetUp') {
             steps {
-                sh("rm -rf ${env.WORKSPACE}/virtenv")
                 sh("mkdir -p ${env.WORKSPACE}/virtenv")
                 sh("virtualenv ${env.WORKSPACE}/virtenv")
                 sh("mv pip.conf ${env.WORKSPACE}/virtenv/pip.conf")
@@ -49,6 +48,12 @@ pipeline {
             steps {
                 sh("${env.WORKSPACE}/virtenv/bin/python -m sfly.ppt.environment.cleaner_service.run")
             }
+        }
+    }
+
+    post {
+        always {
+             sh("rm -rf ${env.WORKSPACE}/virtenv")
         }
     }
 
