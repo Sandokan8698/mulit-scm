@@ -26,6 +26,7 @@ def get_engine(tenant: str, database: str):  # pragma: no cover
 
 
 def get_connection(tenant: str, database: str):  # pragma: no cover
+    log.debug(f"Initializing connection for tenant {tenant} db {database}")
     return get_engine(tenant, database).connect()
 
 
@@ -34,15 +35,18 @@ def in_transaction(*connections):
     transactions = []
     try:
         for connection in connections:
+            log.debug(f"Initializing transaction for db {connection.engine.url.database}")
             transactions.append(connection.begin())
 
         yield
 
         for transaction in transactions:
+            log.debug(f"Committing transaction for db {transaction.connection.engine.url.database}")
             transaction.commit()
 
     except Exception as e:
         for transaction in transactions:
+            log.debug(f"Rolling back transaction for db {transaction.connection.engine.url.database}")
             transaction.rollback()
         log.error(e)
 
@@ -50,4 +54,5 @@ def in_transaction(*connections):
 
         # Close the connections
         for connection in connections:
+            log.debug(f"Closing connection for db {connection.engine.url.database}")
             connection.close()

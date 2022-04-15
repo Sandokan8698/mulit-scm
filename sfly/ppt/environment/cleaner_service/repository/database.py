@@ -16,6 +16,7 @@ def clean_environment():
     env = config.env_to_clean
 
     for tenant in config.tenants:
+        log.debug("Initializing db connections...")
         tenant_conn = get_connection(tenant, config.tenants_config[tenant].get('database'))
         source_conn = get_connection(tenant, config.source_database)
         camunda_conn = get_connection(tenant, config.tenants_config[tenant].get('camunda_database'))
@@ -73,7 +74,7 @@ def __clean_camunda(tenant, env: str, dry_run: bool = False, **kwargs):
             "act_hi_attachment",
             "act_hi_batch",
             "act_hi_caseactinst",
-            "act_hi_caseinst,"
+            "act_hi_caseinst",
             "act_hi_comment",
             "act_hi_dec_in",
             "act_hi_dec_out",
@@ -114,7 +115,8 @@ def __clean(evn, tenant, tables: [], conn, dry_run: bool):
     tables_info = []
 
     for table in tables:
-        row = conn.execute(text(f'SELECT COUNT(*) AS total FROM {table}'))
+        log.debug(f"Reading records of table {table}")
+        row = conn.execute(text(f"SELECT reltuples::bigint AS total FROM pg_class WHERE oid = '{table}'::regclass"))
         total = next(row).total
         tables_info.append({
             "table": table,
