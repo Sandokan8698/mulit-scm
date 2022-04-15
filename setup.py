@@ -32,10 +32,8 @@ setup(
         'pytest-html>=1.16.1',
         'pytest-runner>=4.2',
         'pytest-sugar>=0.3.3',
-        'moto>=1.3.13',
         'pytest-env>=0.6.2',
         'mock>=3.0.5',
-        'testcontainers[postgresql]>=2.5'
     ],
     install_requires=[
         "boto3",

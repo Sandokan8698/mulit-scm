@@ -1,7 +1,6 @@
 # Copyright (c) 2022 Shutterfly. All rights reserved.
 from os import getenv
 
-region = getenv("AWS_REGION", "us-east-1")
 tenants = getenv("TENANTS", 'ftm').split(",")
 dry_run = True if getenv("DRY_RUN", 'true') == 'true' else False
 env_to_clean = getenv("ENV_TO_CLEAN", "qa")

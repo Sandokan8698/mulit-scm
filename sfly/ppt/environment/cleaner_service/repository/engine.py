@@ -22,7 +22,7 @@ def get_engine(tenant: str, database: str):  # pragma: no cover
     )
 
 
-def get_connection(tenant: str, database: str):
+def get_connection(tenant: str, database: str): # pragma: no cover
     return get_engine(tenant, database).connect()
 
 
@@ -41,7 +41,6 @@ def in_transaction(*connections):
     except Exception as e:
         for transaction in transactions:
             transaction.rollback()
-
         print(e)
 
     finally:

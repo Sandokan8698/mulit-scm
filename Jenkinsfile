@@ -44,6 +44,11 @@ pipeline {
                 sh("${env.WORKSPACE}/virtenv/bin/pip install .")
             }
         }
+         stage('Test') {
+            steps {
+                sh("${env.WORKSPACE}/virtenv/bin/python setup.py test")
+            }
+        }
         stage('Execute') {
             steps {
                 sh("${env.WORKSPACE}/virtenv/bin/python -m sfly.ppt.environment.cleaner_service.run")
@@ -53,7 +58,7 @@ pipeline {
 
     post {
         always {
-             sh("rm -rf ${env.WORKSPACE}/virtenv")
+            sh("rm -rf ${env.WORKSPACE}/virtenv")
         }
     }
 
