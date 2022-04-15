@@ -1,13 +1,16 @@
 # Copyright (c) 2022 Shutterfly. All rights reserved.
+import logging
 from os import getenv
+
+logging.basicConfig(level=logging.INFO)
 
 tenants = getenv("TENANTS", 'ftm').split(",")
 dry_run = True if getenv("DRY_RUN", 'true') == 'true' else False
 env_to_clean = getenv("ENV_TO_CLEAN", "qa")
 
 source_database = getenv("SOURCE_DATABASE", "source")
-username = getenv("DB_CREDS_USR", "admin")
-password = getenv("DB_CREDS_PSW", "admin")
+username = getenv("DB_CREDS_USR", "root")
+password = getenv("DB_CREDS_PSW", "root")
 
 tenants_config = {
     "ftm": {

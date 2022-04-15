@@ -1,4 +1,5 @@
 # Copyright (c) 2022 Shutterfly. All rights reserved.
+from logging import getLogger
 
 from sqlalchemy import text
 
@@ -6,9 +7,11 @@ from sfly.ppt.environment.cleaner_service import config
 from sfly.ppt.environment.cleaner_service.formatter import print_table
 from sfly.ppt.environment.cleaner_service.repository.engine import get_connection, in_transaction
 
+log = getLogger("environment-cleaner-service.database")
+
 
 def clean_environment():
-    print("Running Clean...")
+    log.info("Running Clean...")
     dry_run = config.dry_run
     env = config.env_to_clean
 
@@ -124,6 +127,6 @@ def __clean(evn, tenant, tables: [], conn, dry_run: bool):
 
     if not dry_run and should_clean:
         conn.execute(text(f'TRUNCATE TABLE {",".join(tables)}'))
-        print(f"Records deleted")
+        log.info(f"Records deleted")
 
     print("\n")
